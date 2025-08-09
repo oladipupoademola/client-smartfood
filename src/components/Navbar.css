@@ -1,0 +1,164 @@
+/* Container */
+.sf-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+  padding: .7rem 1rem;
+  background: #ffffffcc;
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid #eee;
+}
+
+/* Left: logo + burger */
+.sf-left {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+
+.sf-burger {
+  display: none;
+  border: none;
+  background: transparent;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.sf-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  text-decoration: none;
+}
+
+.sf-logo-mark {
+  font-size: 1.2rem;
+}
+
+.sf-logo-text {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #222;
+}
+
+/* Center: search + filter */
+.sf-center {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  justify-content: center;
+}
+
+.sf-search {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  min-width: 320px;
+  background: #f7f7f7;
+  border: 1px solid #eee;
+  border-radius: 999px;
+  padding: .2rem .3rem .2rem .6rem;
+}
+
+.sf-search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: .5rem .2rem;
+}
+
+.sf-search button {
+  border: none;
+  background: #ff6b00;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: .45rem .9rem;
+  cursor: pointer;
+}
+
+.sf-filter {
+  border: 1px solid #eee;
+  background: #fff;
+  border-radius: 999px;
+  padding: .45rem .7rem;
+}
+
+/* Right: actions */
+.sf-right {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  justify-self: end;
+}
+
+.sf-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+}
+
+.sf-logout {
+  border: 1px solid #ffe0cc;
+  background: #fff5ef;
+  color: #ff6b00;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: .45rem .8rem;
+  cursor: pointer;
+}
+
+.sf-cart {
+  position: relative;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.sf-badge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: #ff6b00;
+  color: #fff;
+  font-weight: 800;
+  font-size: .7rem;
+  padding: .05rem .35rem;
+  border-radius: 999px;
+}
+
+/* Mobile */
+@media (max-width: 840px) {
+  .sf-nav {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .sf-burger {
+    display: inline-block;
+  }
+
+  .sf-center {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 56px;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    padding: .7rem 1rem;
+    display: none;
+  }
+
+  .sf-center.open {
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+    align-items: stretch;
+  }
+
+  .sf-search { min-width: 100%; }
+}

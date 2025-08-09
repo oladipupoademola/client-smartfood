@@ -1,0 +1,107 @@
+/* Home.css */
+
+.home-wrapper {
+  background-color: white;
+  min-height: 100vh;
+  color: #065f46; /* Tailwind's green-900 */
+  font-family: sans-serif;
+}
+
+/* Hero Section */
+.hero-section {
+  background-color: #059669; /* Tailwind's green-600 */
+  color: white;
+  padding: 80px 16px;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.cta-button {
+  background-color: white;
+  color: #059669;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+}
+
+.cta-button:hover {
+  background-color: #e6f5ec;
+}
+
+/* Features Section */
+.features-section {
+  padding: 64px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.features-heading {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 48px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+@media (min-width: 768px) {
+  .features-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.feature-card {
+  padding: 24px;
+  border: 1px solid #bbf7d0; /* Tailwind's green-300 */
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.feature-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* CTA Section */
+.cta-section {
+  background-color: #d1fae5; /* Tailwind's green-100 */
+  padding: 48px 16px;
+  text-align: center;
+}
+
+.cta-heading {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.cta-button-secondary {
+  background-color: #059669;
+  color: white;
+  font-weight: 600;
+  padding: 12px 32px;
+  border-radius: 9999px;
+  text-decoration: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cta-button-secondary:hover {
+  background-color: #047857;
+}
