@@ -2,15 +2,15 @@ import axios from "./axios";
 
 // Login user
 export const loginUser = async (formData) => {
-  return axios.post("/auth/login", formData);
+  return axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, formData);
 };
 
 // Register user
 export const registerUser = async (formData) => {
-  return axios.post("/auth/register", formData);
+  return axios.post(`${import.meta.env.VITE_API_BASE_URL}/auth/register`, formData);
 };
 
 // Optional: Logout user
 export const logoutUser = async () => {
-  return axios.post("/auth/logout");
+  return axios.post(`${import.meta.env.VITE_API_BASE_URL}/auth/logout`);
 };
