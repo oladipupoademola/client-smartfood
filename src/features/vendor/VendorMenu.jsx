@@ -50,7 +50,7 @@ const VendorMenu = () => {
   const fetchMenuItems = async () => {
     try {
       const params = vendorId ? { vendor: vendorId } : {};
-      const res = await axios.get("http://localhost:5000/api/menu", { params });
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/menu`, { params });
       setMenuItems(res.data || []);
     } catch (err) {
       toast.error("Failed to fetch menu items.");
@@ -128,12 +128,12 @@ const VendorMenu = () => {
       if (formData.image) data.append("image", formData.image);
 
       if (editItem) {
-        await axios.put(`http://localhost:5000/api/menu/${editItem._id}`, data, {
+        await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/menu/${editItem._id}`, data, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         toast.success("Menu item updated successfully");
       } else {
-        await axios.post("http://localhost:5000/api/menu", data, {
+        await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/menu`, data, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         toast.success("Menu item added successfully");
@@ -153,7 +153,7 @@ const VendorMenu = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this item?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/menu/${id}`);
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/menu/${id}`);
       toast.success("Menu item deleted");
       fetchMenuItems();
     } catch (err) {

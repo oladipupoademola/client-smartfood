@@ -28,9 +28,9 @@ const VendorOrders = () => {
       // Prefer vendor-scoped endpoint; fallback to query if needed
       let res;
       try {
-        res = await axios.get(`http://localhost:5000/api/orders/vendor/${vendorId}`);
+        res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/${vendorId}`);
       } catch {
-        res = await axios.get(`http://localhost:5000/api/orders`, {
+        res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/orders`, {
           params: { vendor: vendorId },
         });
       }
@@ -65,7 +65,7 @@ const VendorOrders = () => {
 
     try {
       setUpdatingId(orderId);
-      await axios.patch(`http://localhost:5000/api/orders/${orderId}/status`, {
+      await axios.patch(`${import.meta.env.VITE_API_BASE_URL}/api/orders/${orderId}/status`, {
         status: next,
       });
       // quick refresh after update

@@ -49,7 +49,7 @@ const Checkout = () => {
 
     setSubmitting(true);
     try {
-      await axios.post("http://localhost:5000/api/orders", {
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/orders`, {
         ...formData,
         items: payloadItems,
         total,

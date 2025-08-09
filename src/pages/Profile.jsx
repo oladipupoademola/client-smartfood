@@ -19,10 +19,10 @@ const Profile = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const me = await axios.get("http://localhost:5000/api/users/me");
+        const me = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/users/me`);
         setUser(me.data);
 
-        const myOrders = await axios.get("http://localhost:5000/api/orders/me");
+        const myOrders = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/orders/me`);
         setOrders(Array.isArray(myOrders.data) ? myOrders.data : []);
       } catch (e) {
         setError(e.response?.data?.message || "Failed to load profile");
@@ -43,7 +43,7 @@ const Profile = () => {
     setError("");
     try {
       // 1) Update basic fields
-      await axios.put("http://localhost:5000/api/users/me", {
+      await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/users/me`, {
         fullName: user.fullName,
         phone: user.phone,
         address: user.address,
@@ -53,7 +53,7 @@ const Profile = () => {
       if (avatarFile) {
         const fd = new FormData();
         fd.append("avatar", avatarFile);
-        const r = await axios.put("http://localhost:5000/api/users/me/avatar", fd, {
+        const r = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/users/me/avatar`, fd, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         setUser((u) => ({ ...u, avatarUrl: r.data.avatarUrl }));

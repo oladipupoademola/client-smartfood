@@ -13,7 +13,7 @@ const VendorDashboard = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/orders");
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/orders`);
         const vendorOrders = res.data.filter(order =>
           order.items.some(item => item.vendorId === vendorId)
         );

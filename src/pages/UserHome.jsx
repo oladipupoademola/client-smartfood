@@ -29,7 +29,7 @@ const UserHome = () => {
       if (q) params.search = q;
       if (c) params.category = c;
 
-      const res = await axios.get("http://localhost:5000/api/menu", { params });
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/menu`, { params });
       setMenuItems(res.data || []);
     } catch (err) {
       console.error("Failed to fetch menu items", err);
