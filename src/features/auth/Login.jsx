@@ -1,12 +1,14 @@
 import React, { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { loginUser } from "../../api/auth";
+import API from "../../api/axios";           // use centralized API
 import AuthContext from "../../context/AuthContext";
 import "./Login.css";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [submitting, setSubmitting] = useState(false);
+
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -16,25 +18,37 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const res = await loginUser(formData);
-      const { token, user } = res.data;
+    if (submitting) return;
 
-      // keep your existing auth state
+    try {
+      setSubmitting(true);
+
+      // Ensure we hit /api/auth/login (axios base should include /api)
+      const res = await API.post("/auth/login", formData, {
+        withCredentials: false,
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const { token, user } = res.data || {};
+      if (!token || !user) {
+        throw new Error("Invalid login response");
+      }
+
+      // Keep your existing auth state
       login(token, user);
       toast.success("Login successful!");
 
-      // ✅ store userId for convenience (optional)
+      // Optional convenience IDs
       localStorage.setItem("userId", user._id || "");
 
-      // ✅ set/clear vendorId based on role (THIS is what your VendorMenu/CRUD needs)
+      // Set/clear vendorId based on role (what your vendor CRUD uses)
       if (user.role === "vendor") {
         localStorage.setItem("vendorId", user._id);
       } else {
-        localStorage.removeItem("vendorId"); // avoid stale vendorId for non‑vendors
+        localStorage.removeItem("vendorId");
       }
 
-      // Role-based redirection (unchanged)
+      // Role-based redirect (unchanged)
       switch (user.role) {
         case "admin":
           navigate("/admin/dashboard");
@@ -49,7 +63,13 @@ const Login = () => {
           navigate("/");
       }
     } catch (err) {
-      toast.error(err.response?.data?.message || "Login failed");
+      const msg =
+        err?.response?.data?.message ||
+        err?.message ||
+        "Login failed";
+      toast.error(msg);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -66,6 +86,7 @@ const Login = () => {
             onChange={handleChange}
             required
             className="login-input"
+            autoComplete="email"
           />
           <input
             type="password"
@@ -75,12 +96,17 @@ const Login = () => {
             onChange={handleChange}
             required
             className="login-input"
+            autoComplete="current-password"
           />
-          <button type="submit" className="login-button">Login</button>
+          <button type="submit" className="login-button" disabled={submitting}>
+            {submitting ? "Logging in…" : "Login"}
+          </button>
         </form>
         <p className="login-footer">
-          Don't have an account?{" "}
-          <Link to="/register" className="login-link">Register here</Link>
+          Don&apos;t have an account{" "}
+          <Link to="/register" className="login-link">
+            Register here
+          </Link>
         </p>
       </div>
     </div>

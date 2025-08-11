@@ -11,25 +11,38 @@ const Register = () => {
     password: "",
     role: "user",
   });
+  const [submitting, setSubmitting] = useState(false);
 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (submitting) return;
+
     try {
-      await API.post("/auth/register", formData);
+      setSubmitting(true);
+
+      // Ensure we hit /api/auth/register (axios base should include /api)
+      await API.post("/auth/register", formData, {
+        withCredentials: false,
+        headers: { "Content-Type": "application/json" },
+      });
+
       toast.success("Registration successful!");
       navigate("/login");
     } catch (err) {
-      toast.error(err.response?.data?.message || "Registration failed");
+      const msg =
+        err?.response?.data?.message ||
+        err?.message ||
+        "Registration failed";
+      toast.error(msg);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -46,6 +59,7 @@ const Register = () => {
           onChange={handleChange}
           required
           className="register-input"
+          autoComplete="name"
         />
 
         <input
@@ -56,6 +70,7 @@ const Register = () => {
           onChange={handleChange}
           required
           className="register-input"
+          autoComplete="email"
         />
 
         <input
@@ -66,6 +81,7 @@ const Register = () => {
           onChange={handleChange}
           required
           className="register-input"
+          autoComplete="new-password"
         />
 
         <select
@@ -78,12 +94,12 @@ const Register = () => {
           <option value="vendor">Vendor</option>
         </select>
 
-        <button type="submit" className="register-button">
-          Register
+        <button type="submit" className="register-button" disabled={submitting}>
+          {submitting ? "Registering…" : "Register"}
         </button>
 
         <p className="register-footer">
-          Already have an account?{" "}
+          Already have an account{" "}
           <Link to="/login" className="register-link">
             Login
           </Link>
